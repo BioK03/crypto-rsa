@@ -38,6 +38,7 @@ public class Key {
         this.d = d;
     }
     
+    /* Get the public key*/
     public HashMap<String, BigInteger> getPublicKey(){
         HashMap hm = new HashMap();
         hm.put("n", n);
@@ -45,6 +46,7 @@ public class Key {
         return hm;
     }
     
+    /* Get the private key*/
     public HashMap<String, BigInteger> getPrivateKey(){
         HashMap hm = new HashMap();
         hm.put("d", d);

@@ -6,7 +6,6 @@
 package crypto;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -16,12 +15,8 @@ import java.util.Random;
  */
 public class Sender {
 
-    private Key key;
-    private String name;
-
-    public void setKey(Key k) {
-        this.key = k;
-    }
+    private Key key;/* Key of the sender*/
+    private String name;/* Name of the sender, only for puprose*/
 
     public Sender() {
         this.name = "Alice";
@@ -33,7 +28,18 @@ public class Sender {
         this.key = new Key();
     }
 
-
+    /* GETTERS & SETTERS */
+    public Key getKey(){
+        return this.key;
+    }
+    
+    public void setKey(Key k) {
+        this.key = k;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
     
     /* GET KEYS */
     public HashMap<String, BigInteger> getPrivateKey() {
@@ -45,20 +51,21 @@ public class Sender {
     }
     
     /* ENC & DEC */
-    public BigInteger Encrypt(BigInteger x, BigInteger e, BigInteger n) {
+    public BigInteger EncryptWithExternalKey(BigInteger x, BigInteger e, BigInteger n) {
         return x.modPow(e, n);
     }
     
-    public BigInteger Encrypt2(BigInteger x) {
-        return this.Encrypt(x, getPublicKey().get("e"), getPublicKey().get("n"));
-    }
-
-    public BigInteger Decrypt(BigInteger x, BigInteger d, BigInteger n) {
+    public BigInteger DecryptWithExternalKey(BigInteger x, BigInteger d, BigInteger n) {
         return x.modPow(d, n);
     }
     
-    public BigInteger Decrypt2(BigInteger x) {
-        return this.Decrypt(x, getPrivateKey().get("d"), getPrivateKey().get("n"));
+    public BigInteger EncryptWithOwnKey(BigInteger x) {
+        return this.EncryptWithExternalKey(x, getPublicKey().get("e"), getPublicKey().get("n"));
+    }
+
+    
+    public BigInteger DecryptWithOwnKey(BigInteger x) {
+        return this.DecryptWithExternalKey(x, getPrivateKey().get("d"), getPrivateKey().get("n"));
     }
 
     /* KEY GENERATION */
