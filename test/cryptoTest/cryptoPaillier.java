@@ -5,25 +5,24 @@
  */
 package cryptoTest;
 
-import RSA_crypto.RSA_sender;
-import java.math.BigInteger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import Paillier_crypto.*;
 
 /**
  *
  * @author Bertrand
  */
-public class cryptoRSA {
+public class cryptoPaillier {
     
-    protected RSA_sender senderBob;
-    protected RSA_sender senderAlice;
+    protected Paillier_sender senderBob;
+    protected Paillier_sender senderAlice;
     
-    public cryptoRSA() {
+    public cryptoPaillier() {
     }
     
     @BeforeClass
@@ -36,8 +35,8 @@ public class cryptoRSA {
     
     @Before
     public void setUp() {
-        senderBob = new RSA_sender("Bob");
-        senderAlice = new RSA_sender("Alice");
+        senderBob = new Paillier_sender("Bob");
+        senderAlice = new Paillier_sender("Alice");
     }
     
     @After
@@ -53,35 +52,33 @@ public class cryptoRSA {
     @Test
     public void simpleEncryption(){
         int toBeEncrypted = 42;
-        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithPrivateKey(senderBob.encryptMessageWithPublicKey(toBeEncrypted)));
+        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderBob.encryptMessageWithOwnKey(toBeEncrypted+"")));
         assertEquals(enc2dec, toBeEncrypted);
     }
     
     @Test
     public void msgFromAliceToBob(){
         int toBeEncrypted = 424242;
-        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithPrivateKey(senderAlice.encryptMessageWithExternalKey(toBeEncrypted, senderBob.getKey())));
+        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderAlice.encryptMessageWithExternalKey(senderBob.getKey(), toBeEncrypted+"")));
         assertEquals(toBeEncrypted, enc2dec);
     }
     
     @Test
     public void stringEncryption(){
         String toBeEncrypted = "BONJOUR";
-        String enc2dec = senderBob.decryptStringMessageWithPrivateKey(senderBob.encryptStringMessageWithPublicKey(toBeEncrypted));
+        String enc2dec = senderBob.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithOwnKey(toBeEncrypted));
         assertEquals(enc2dec, toBeEncrypted);
     }
     
     @Test
     public void stringMsgFromBobToAlice(){
         String toBeEncrypted = "Bonjour";
-        String enc2dec = senderAlice.decryptStringMessageWithPrivateKey(senderBob.encryptStringMessageWithExternalKey(toBeEncrypted, senderAlice.getKey()));
+        String enc2dec = senderAlice.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithExternalKey(senderAlice.getKey(), toBeEncrypted));
         assertEquals(toBeEncrypted, enc2dec);
     }
     
     @Test
-    public void test4_3(){
-        int toBeEncrypted = 424344;
-        int testResult = Integer.parseInt(senderBob.test_4_3(new BigInteger(toBeEncrypted+""))+"");
-        assertEquals(toBeEncrypted, testResult);
+    public void testSumEncEqEncSum(){
+        assertEquals(senderAlice.testSum("3", "41"), "44");
     }
 }

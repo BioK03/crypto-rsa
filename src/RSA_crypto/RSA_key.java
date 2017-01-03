@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package crypto;
+package RSA_crypto;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -12,15 +12,15 @@ import java.util.HashMap;
  *
  * @author p1201629
  */
-public class Key {
+public class RSA_key {
     private BigInteger n;
     private BigInteger e;
     private BigInteger d;
     
-    public Key(){
+    public RSA_key(){
     }
     
-    public Key(BigInteger n, BigInteger e, BigInteger d){
+    public RSA_key(BigInteger n, BigInteger e, BigInteger d){
         this.n = n;
         this.e = e;
         this.d = d;
