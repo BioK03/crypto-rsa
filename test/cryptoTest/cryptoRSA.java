@@ -5,7 +5,7 @@
  */
 package cryptoTest;
 
-import RSA_crypto.RSA_sender;
+import RSA_crypto.RSA_user;
 import java.math.BigInteger;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class cryptoRSA {
     
-    protected RSA_sender senderBob;
-    protected RSA_sender senderAlice;
+    protected RSA_user senderBob;
+    protected RSA_user senderAlice;
     
     public cryptoRSA() {
     }
@@ -36,8 +36,8 @@ public class cryptoRSA {
     
     @Before
     public void setUp() {
-        senderBob = new RSA_sender("Bob");
-        senderAlice = new RSA_sender("Alice");
+        senderBob = new RSA_user("Bob");
+        senderAlice = new RSA_user("Alice");
     }
     
     @After

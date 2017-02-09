@@ -23,4 +23,10 @@ public class RandomBigInteger {
         }
         return result;
     }
+    
+    public static BigInteger nextRandomBigInteger() {
+        Random rand = new Random();
+        BigInteger result = new BigInteger(128, rand);
+        return result;
+    }
 }

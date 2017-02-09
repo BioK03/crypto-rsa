@@ -19,8 +19,8 @@ import Paillier_crypto.*;
  */
 public class cryptoPaillier {
     
-    protected Paillier_sender senderBob;
-    protected Paillier_sender senderAlice;
+    protected Paillier_user senderBob;
+    protected Paillier_user senderAlice;
     
     public cryptoPaillier() {
     }
@@ -35,8 +35,8 @@ public class cryptoPaillier {
     
     @Before
     public void setUp() {
-        senderBob = new Paillier_sender("Bob");
-        senderAlice = new Paillier_sender("Alice");
+        senderBob = new Paillier_user("Bob");
+        senderAlice = new Paillier_user("Alice");
     }
     
     @After
@@ -52,28 +52,28 @@ public class cryptoPaillier {
     @Test
     public void simpleEncryption(){
         int toBeEncrypted = 42;
-        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderBob.encryptMessageWithOwnKey(toBeEncrypted+"")));
+        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderBob.encryptMessageWithOwnKey(toBeEncrypted+"")[0]));
         assertEquals(enc2dec, toBeEncrypted);
     }
     
     @Test
     public void msgFromAliceToBob(){
         int toBeEncrypted = 424242;
-        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderAlice.encryptMessageWithExternalKey(senderBob.getKey(), toBeEncrypted+"")));
+        int enc2dec = Integer.parseInt(senderBob.decryptMessageWithOwnKey(senderAlice.encryptMessageWithExternalKey(senderBob.getKey(), toBeEncrypted+"")[0]));
         assertEquals(toBeEncrypted, enc2dec);
     }
     
     @Test
     public void stringEncryption(){
         String toBeEncrypted = "BONJOUR";
-        String enc2dec = senderBob.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithOwnKey(toBeEncrypted));
+        String enc2dec = senderBob.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithOwnKey(toBeEncrypted)[0]);
         assertEquals(enc2dec, toBeEncrypted);
     }
     
     @Test
     public void stringMsgFromBobToAlice(){
         String toBeEncrypted = "Bonjour";
-        String enc2dec = senderAlice.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithExternalKey(senderAlice.getKey(), toBeEncrypted));
+        String enc2dec = senderAlice.decryptStringMessageWithOwnKey(senderBob.encryptStringMessageWithExternalKey(senderAlice.getKey(), toBeEncrypted)[0]);
         assertEquals(toBeEncrypted, enc2dec);
     }
     
